@@ -45,6 +45,12 @@ class ChatRepository {
       }
     } catch (e) {
       debugPrint('ERROR CHAT ACTION SEND ${e.toString()}');
+      ChatMessage botMessage = ChatMessage(
+        text: 'Sorry your request cannot be show right now :(',
+        user: Utility.geminiBot,
+        createdAt: DateTime.now(),
+      );
+      messages.insert(0, botMessage);
     } finally {
       typingState.remove(Utility.geminiBot);
     }

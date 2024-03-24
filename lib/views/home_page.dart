@@ -17,6 +17,33 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: DashChat(
           typingUsers: Utility.typing,
+          messageListOptions: const MessageListOptions(
+            showDateSeparator: true,
+          ),
+          messageOptions: MessageOptions(
+            showTime: true,
+            showOtherUsersName: true,
+            showCurrentUserAvatar: true,
+            showOtherUsersAvatar: true,
+            userNameBuilder: (user) {
+              return Text(user.getFullName());
+            },
+            avatarBuilder: (user, onPressAvatar, onLongPressAvatar) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: Image.network(user.id == '1'
+                        ? Utility.userAvatar
+                        : Utility.botAvatar),
+                  ),
+                ),
+              );
+            },
+          ),
           currentUser: Utility.currentUser,
           onSend: (_) async {
             setState(() {});
