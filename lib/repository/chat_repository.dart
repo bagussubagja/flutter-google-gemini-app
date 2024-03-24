@@ -8,12 +8,18 @@ import 'package:http/http.dart' as http;
 
 class ChatRepository {
   static Map<String, String> headers = {'Content-Type': 'application/json'};
+  String urlChat =
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${dotenv.env["APIKEY"]}';
+  String urlImage =
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${dotenv.env["APIKEY"]}';
   static Future chatActionSend(
     ChatMessage message,
     List<ChatMessage> messages,
     List<ChatUser> typingState,
+    bool isChat,
+    String? image,
   ) async {
-    var data = {
+    var dataChat = {
       "contents": [
         {
           "parts": [
@@ -22,15 +28,31 @@ class ChatRepository {
         }
       ]
     };
+
+    final imageDataChat = {
+      "contents": [
+        {
+          "parts": [
+            {"text": message.text},
+            {
+              "inlineData": {
+                "mimeType": "image/jpeg",
+                "data": image,
+              }
+            }
+          ]
+        }
+      ],
+    };
     try {
       typingState.add(Utility.geminiBot);
       messages.insert(0, message);
       var response = await http.post(
           Uri.parse(
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${dotenv.env["APIKEY"]}',
+            !isChat ? ChatRepository().urlChat : ChatRepository().urlImage,
           ),
           headers: headers,
-          body: jsonEncode(data));
+          body: jsonEncode(!isChat ? dataChat : imageDataChat));
       var result = jsonDecode(response.body);
       if (response.statusCode == 200) {
         ChatMessage botMessage = ChatMessage(

@@ -38,6 +38,7 @@ dependencies:
   dash_chat_2: ^0.0.20
   http: ^1.1.0
   flutter_dotenv: ^5.1.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
