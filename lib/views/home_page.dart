@@ -76,8 +76,13 @@ class _HomePageState extends State<HomePage> {
               currentUser: Utility.currentUser,
               onSend: (_) async {
                 setState(() {});
-                List<int> imageBytes = File(fileImage!.path).readAsBytesSync();
-                String base64File = base64.encode(imageBytes);
+                String? base64File = "";
+                if (fileImage?.path != null) {
+                  List<int> imageBytes =
+                      File(fileImage!.path).readAsBytesSync();
+
+                  base64File = base64.encode(imageBytes);
+                }
                 await ChatRepository.chatActionSend(
                   _,
                   Utility.messages,

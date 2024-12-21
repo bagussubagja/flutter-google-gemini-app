@@ -9,9 +9,9 @@ import 'package:http/http.dart' as http;
 class ChatRepository {
   static Map<String, String> headers = {'Content-Type': 'application/json'};
   String urlChat =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${dotenv.env["APIKEY"]}';
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${dotenv.env["APIKEY"]}';
   String urlImage =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${dotenv.env["APIKEY"]}';
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${dotenv.env["APIKEY"]}';
   static Future chatActionSend(
     ChatMessage message,
     List<ChatMessage> messages,
